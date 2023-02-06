@@ -4,6 +4,8 @@ from .forms import *
 from .markets_src import *
 from website.models import *
 from config import constants
+from sqlalchemy import create_engine
+from src.utils.formatting import color_cell2
 
 
 class MarketsView(TemplateView):
@@ -67,6 +69,12 @@ class BondsView(TemplateView):
 class SectorsView(TemplateView):
     template_name = 'markets/sectors.html'
 
+    def get_context_data(self, **kwargs):
+        engine = create_engine(os.environ.get('LOCAL_DB_URL'))
+        df = pd.read_sql('select * from markets.sectors', engine)
+        df.drop('RT', 1, inplace=True)
+        df.iloc[:,1:] = df.iloc[:,1:].applymap(color_cell2)
+        return {'df': df.to_html(escape=False)}
 
 class YieldCurvesView(TemplateView):
     template_name = 'markets/yield_curves.html'

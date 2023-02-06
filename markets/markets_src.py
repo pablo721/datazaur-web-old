@@ -141,7 +141,7 @@ def get_commodities():
 	return tables
 
 
-@load_or_save('forex.files', 1800)
+@load_or_save('forex.files', 180000000000)
 def get_fx_rates(base_currency):
 	return investpy.get_currency_crosses_overview(base_currency)[['symbol', 'bid', 'change', 'change_percentage']]
 

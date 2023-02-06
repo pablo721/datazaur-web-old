@@ -1,10 +1,8 @@
 {% extends 'calendar_/base_calendar.html' %}
 
-{% block searchbar %}
-{% endblock %}
 
 {% block content %}
   <div id="calendar_table_div">
-    {% include 'calendar_/_macro_calendar_table.html' %}
+    {{ df |safe }}
   </div>
 {% endblock %}
